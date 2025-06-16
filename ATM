@@ -1,11 +1,11 @@
 
-# Initial setup
+# Setup
 balance = 1000.0
 transactions = []
 failed_withdrawals = 0
 PASSWORD = "1234"
 
-# Login system
+# Login
 print("Welcome to the ATM!")
 entered_password = input("Please enter your password to login: ")
 
@@ -63,7 +63,7 @@ while True:
     else:
         print("Invalid choice. Please select from 1 to 4.")
 
-# Show transaction history
+# Show transaction
 print("\n--- Transaction History ---")
 for t in transactions:
     print("-", t)
