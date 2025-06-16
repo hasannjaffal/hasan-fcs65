@@ -1,0 +1,70 @@
+
+
+# Initial setup
+balance = 1000.0
+transactions = []
+failed_withdrawals = 0
+PASSWORD = "1234"
+
+# Login system
+print("Welcome to the ATM!")
+entered_password = input("Please enter your password to login: ")
+
+if entered_password != PASSWORD:
+    print("Incorrect password. Exiting.")
+    exit()
+
+while True:
+    print("\n--- Menu ---")
+    print("1. Check Balance")
+    print("2. Deposit Money")
+    print("3. Withdraw Money")
+    print("4. Exit")
+    
+    choice = input("Select an option (1-4): ")
+
+    if choice == "1":
+        print(f"Your current balance is ${balance:.2f}")
+        transactions.append("Checked balance")
+
+    elif choice == "2":
+        try:
+            amount = float(input("Enter amount to deposit: "))
+            if amount <= 0:
+                print("Deposit amount must be positive.")
+            else:
+                balance += amount
+                print(f"${amount:.2f} deposited. New balance is ${balance:.2f}")
+                transactions.append(f"Deposited ${amount:.2f}")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    elif choice == "3":
+        try:
+            amount = float(input("Enter amount to withdraw: "))
+            if amount <= 0:
+                print("Withdrawal amount must be positive.")
+            elif amount > balance:
+                print("Insufficient balance.")
+                failed_withdrawals += 1
+                transactions.append(f"Failed withdrawal attempt of ${amount:.2f}")
+                if failed_withdrawals > 3:
+                    print("Warning: More than 3 failed withdrawals attempted.")
+            else:
+                balance -= amount
+                print(f"${amount:.2f} withdrawn. New balance is ${balance:.2f}")
+                transactions.append(f"Withdrew ${amount:.2f}")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    elif choice == "4":
+        print("Exiting the program.")
+        break
+
+    else:
+        print("Invalid choice. Please select from 1 to 4.")
+
+# Show transaction history
+print("\n--- Transaction History ---")
+for t in transactions:
+    print("-", t)
